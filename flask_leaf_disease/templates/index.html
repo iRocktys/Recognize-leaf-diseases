@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classificação de Doenças em Folhas de Pimenta</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Identificação de Doenças em Folhas de Pimenta 🌿</h1>
+      <p>
+        Envie uma imagem de uma folha de pimenta para verificar se ela está
+        saudável ou doente.
+      </p>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </body>
+</html>
