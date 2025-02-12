@@ -3,23 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Classificação de Doenças em Folhas de Pimenta</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
+    <title>PlantGuard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <div class="container">
-      <h1>Identificação de Doenças em Folhas de Pimenta 🌿</h1>
-      <p>
-        Envie uma imagem de uma folha de pimenta para verificar se ela está
-        saudável ou doente.
+  <body
+    class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6"
+  >
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-3xl text-center">
+      <h1 class="text-3xl font-bold text-gray-700 mb-4">PlantGuard</h1>
+      <p class="text-gray-600 text-justify mb-6">
+        O <strong>PlantGuard</strong> é um sistema baseado em redes neurais
+        convolucionais (CNN) que identifica doenças em folhas de plantas a
+        partir de imagens. Ele analisa padrões visuais e classifica a saúde da
+        folha com alta precisão. Atualmente, o PlantGuard suporta a detecção de
+        doenças em três tipos de plantas: <strong>batata</strong>,
+        <strong>tomate</strong> e <strong>pimenta</strong>, auxiliando no
+        diagnóstico precoce e na tomada de decisões para um cultivo mais
+        saudável.
       </p>
-      <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <button type="submit">Enviar</button>
-      </form>
+
+      <!-- Representação das plantas -->
+      <div class="flex justify-center gap-8 mb-6">
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-lg font-bold"
+          >
+            🍅
+          </div>
+          <p class="mt-2 text-gray-700 font-medium">Tomate</p>
+        </div>
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-white text-lg font-bold"
+          >
+            🥔
+          </div>
+          <p class="mt-2 text-gray-700 font-medium">Batata</p>
+        </div>
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center text-white text-lg font-bold"
+          >
+            🌶️
+          </div>
+          <p class="mt-2 text-gray-700 font-medium">Pimenta</p>
+        </div>
+      </div>
+
+      <!-- Upload e Classificação -->
+      <div class="bg-gray-100 p-6 rounded-xl shadow-md mb-6">
+        <form method="post" enctype="multipart/form-data" class="mb-6">
+          <input
+            type="file"
+            class="block w-full p-2 border rounded mb-3"
+            name="file"
+            id="file-input"
+            required
+          />
+          <div class="flex justify-center mt-4">
+            <button
+              type="submit"
+              class="bg-green-600 text-white py-2 px-6 rounded-lg shadow-lg font-bold text-xs hover:bg-green-700"
+            >
+              Classificar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {% if history %}
+      <h2 class="text-xl font-bold text-gray-600 mt-6 mb-2">
+        Histórico de Classificações
+      </h2>
+      <div class="grid grid-cols-3 gap-4">
+        {% for item in history %}
+        <div class="p-2 bg-gray-200 rounded-lg text-center">
+          <img
+            src="{{ item.image }}"
+            class="w-full h-32 object-cover rounded"
+            alt="Imagem da folha"
+          />
+          <p class="text-lg font-bold text-gray-800 mt-2">{{ item.result }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
   </body>
 </html>
